@@ -1,4 +1,7 @@
-package com.challenge.demo;
+package com.challenge.demo.dto;
+
+import com.challenge.demo.model.Question;
+import com.challenge.demo.model.Site;
 
 import java.util.ArrayList;
 import java.util.Date;

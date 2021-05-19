@@ -1,5 +1,12 @@
-package com.challenge.demo;
+package com.challenge.demo.controller;
 
+import com.challenge.demo.dto.QuestionAnswerDTO;
+import com.challenge.demo.dto.QuestionDTO;
+import com.challenge.demo.model.Question;
+import com.challenge.demo.model.QuestionAnswer;
+import com.challenge.demo.repository.QuestionAnswerRepository;
+import com.challenge.demo.repository.QuestionRepository;
+import com.challenge.demo.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +49,21 @@ public class QuestionController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<QuestionDTO>> getSites() {
+	public ResponseEntity<List<QuestionDTO>> getQuestions() {
 		return Optional
 				.ofNullable(questionRepository.findAll())
 				.map(questions -> ResponseEntity.ok(QuestionDTO.build(questions)))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
+
+	@GetMapping("sites/{siteId}")
+	public ResponseEntity<List<QuestionDTO>> getQuestions(@PathVariable(value = "siteId") Long siteId) {
+		return Optional
+				.ofNullable(questionRepository.findSiteQuestions(siteId))
+				.map(questions -> ResponseEntity.ok(QuestionDTO.build(questions)))
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)

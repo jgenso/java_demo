@@ -1,5 +1,10 @@
-package com.challenge.demo;
+package com.challenge.demo.controller;
 
+import com.challenge.demo.dto.QuestionDTO;
+import com.challenge.demo.dto.SiteDTO;
+import com.challenge.demo.model.Question;
+import com.challenge.demo.model.Site;
+import com.challenge.demo.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,48 +33,53 @@ public class SiteController {
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Site createSite(@RequestBody Site createSite) {
-		createSite.setSiteUUID(UUID.randomUUID());
-
-		return siteRepository.save(createSite);
+	public ResponseEntity<SiteDTO> createSite(@RequestBody SiteDTO incomingSite) {
+		return siteRepository
+				.findById(incomingSite.getSiteId())
+				.map(site -> {
+					final Site newSite = SiteDTO.createSite(incomingSite, site);
+					return new ResponseEntity<>(SiteDTO.build(siteRepository.save(newSite)), HttpStatus.CREATED);
+				})
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
+
 	@GetMapping()
-	public ResponseEntity<List<Site>> getSites() {
+	public ResponseEntity<List<SiteDTO>> getSites() {
 		return Optional
 				.ofNullable(siteRepository.findAll())
-				.map(sites -> ResponseEntity.ok(sites))
+				.map(sites -> ResponseEntity.ok(SiteDTO.build(sites)))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Site> updateSite(@RequestBody Site updatedSite, @PathVariable(value = "id") Long siteId) {
+	public ResponseEntity<SiteDTO> updateSite(@RequestBody Site updatedSite, @PathVariable(value = "id") Long siteId) {
 		return siteRepository
 				.findById(siteId)
 				.map(site -> {
 					site.setUrl(updatedSite.getUrl());
-					return new ResponseEntity<>(siteRepository.save(site), HttpStatus.OK);
+					return new ResponseEntity<>(SiteDTO.build(siteRepository.save(site)), HttpStatus.OK);
 				})
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Site> deleteSite(@PathVariable(value = "id") Long siteId) {
+	public ResponseEntity<SiteDTO> deleteSite(@PathVariable(value = "id") Long siteId) {
 		return siteRepository
 				.findById(siteId)
 				.map(site -> {
 					siteRepository.delete(site);
-					return ResponseEntity.ok(site);
+					return ResponseEntity.ok(SiteDTO.build(site));
 				})
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Site> getSiteById(@PathVariable(value = "id") Long siteId) {
+	public ResponseEntity<SiteDTO> getSiteById(@PathVariable(value = "id") Long siteId) {
 		return siteRepository
 				.findById(siteId)
-				.map(site -> ResponseEntity.ok(site))
+				.map(site -> ResponseEntity.ok(SiteDTO.build(site)))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 

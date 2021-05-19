@@ -1,4 +1,4 @@
-package com.challenge.demo;
+package com.challenge.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.CreatedDate;

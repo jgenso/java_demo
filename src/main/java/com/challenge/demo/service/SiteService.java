@@ -1,0 +1,5 @@
+package com.challenge.demo.service;
+
+public interface SiteService {
+
+}
