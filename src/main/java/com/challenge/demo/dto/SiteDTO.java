@@ -40,7 +40,7 @@ public class SiteDTO {
         return ret;
     }
 
-    public static Site createSite(final SiteDTO incomingSite, final Site site) {
+    public static Site createSite(final SiteDTO incomingSite) {
         final Site newSite = new Site();
         newSite.setSiteUUID(incomingSite.getSiteUUID());
         newSite.setUrl(incomingSite.getUrl());
