@@ -1,6 +1,7 @@
 package com.challenge.demo.dto;
 
 import com.challenge.demo.model.Question;
+import com.challenge.demo.model.QuestionType;
 import com.challenge.demo.model.Site;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class QuestionDTO {
 
 	private Date updatedAt;
 
+	private QuestionType questionType;
+
 	public static QuestionDTO build(Question question) {
 		final QuestionDTO obj = new QuestionDTO();
 		obj.setSiteId(question.getSite().getSiteId());
@@ -26,6 +29,7 @@ public class QuestionDTO {
 		obj.setQuestion(question.getQuestion());
 		obj.setUpdatedAt(question.getUpdatedAt());
 		obj.setCreatedAt(question.getCreatedAt());
+		obj.setQuestionType(question.getQuestionType());
 
 		return obj;
 	}
@@ -44,6 +48,7 @@ public class QuestionDTO {
 		final Question newQ = new Question();
 		newQ.setSite(site);
 		newQ.setQuestion(incomingQuestion.getQuestion());
+		newQ.setQuestionType(incomingQuestion.getQuestionType());
 
 		return newQ;
 	}
@@ -87,4 +92,7 @@ public class QuestionDTO {
 	public void setQuestionId(final Long questionId) {
 		this.questionId = questionId;
 	}
+
+	public QuestionType getQuestionType() { return questionType; }
+	public void setQuestionType(QuestionType questionType) { this.questionType = questionType; }
 }
