@@ -1,7 +1,6 @@
 package com.challenge.demo.service;
 
 import com.challenge.demo.dto.SiteDTO;
-import com.challenge.demo.model.Site;
 
 import java.util.List;
 import java.util.Optional;

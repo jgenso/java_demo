@@ -4,8 +4,6 @@ import com.challenge.demo.dto.SiteDTO;
 import com.challenge.demo.model.Site;
 import com.challenge.demo.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

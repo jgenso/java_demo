@@ -1,10 +1,6 @@
 package com.challenge.demo.controller;
 
-import com.challenge.demo.dto.QuestionDTO;
 import com.challenge.demo.dto.SiteDTO;
-import com.challenge.demo.model.Question;
-import com.challenge.demo.model.Site;
-import com.challenge.demo.repository.SiteRepository;
 import com.challenge.demo.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
