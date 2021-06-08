@@ -1,10 +1,13 @@
 package com.challenge.demo.service;
 
 import com.challenge.demo.dto.QuestionAnswerDTO;
+import com.challenge.demo.dto.QuestionColumnDTO;
 import com.challenge.demo.dto.QuestionDTO;
 import com.challenge.demo.model.Question;
 import com.challenge.demo.model.QuestionAnswer;
+import com.challenge.demo.model.QuestionColumn;
 import com.challenge.demo.repository.QuestionAnswerRepository;
+import com.challenge.demo.repository.QuestionColumnRepository;
 import com.challenge.demo.repository.QuestionRepository;
 import com.challenge.demo.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionAnswerRepository questionAnswerRepository;
+
+    @Autowired
+    private QuestionColumnRepository questionColumnRepository;
 
     @Override
     public Optional<QuestionDTO> create(QuestionDTO questionDTO) {
@@ -82,5 +88,20 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository
                 .findById(questionId)
                 .map(question -> QuestionAnswerDTO.build(question.getAnswers()));
+    }
+
+    public Optional<QuestionColumnDTO> createQuestionColumns(Long questionId, QuestionColumnDTO questionColumnDTO) {
+        return questionRepository
+                .findById(questionId)
+                .map(question -> {
+                    final QuestionColumn newQC = QuestionColumnDTO.transform(questionColumnDTO, question);
+                    return QuestionColumnDTO.build(questionColumnRepository.save(newQC));
+                });
+    }
+
+    public Optional<List<QuestionColumnDTO>> getQuestionsColumns(Long questionId) {
+        return questionRepository
+                .findById(questionId)
+                .map(question -> QuestionColumnDTO.build(question.getColumns()));
     }
 }

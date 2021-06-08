@@ -1,6 +1,7 @@
 package com.challenge.demo.service;
 
 import com.challenge.demo.dto.QuestionAnswerDTO;
+import com.challenge.demo.dto.QuestionColumnDTO;
 import com.challenge.demo.dto.QuestionDTO;
 import com.challenge.demo.model.Question;
 
@@ -23,4 +24,8 @@ public interface QuestionService {
     Optional<QuestionAnswerDTO> createQuestionAnswers(Long questionId, QuestionAnswerDTO questionAnswerDTO);
 
     Optional<List<QuestionAnswerDTO>> getQuestionsAnswers(Long questionId);
+
+    Optional<QuestionColumnDTO> createQuestionColumns(Long questionId, QuestionColumnDTO questionColumnDTO);
+
+    Optional<List<QuestionColumnDTO>> getQuestionsColumns(Long questionId);
 }

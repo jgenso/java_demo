@@ -74,8 +74,8 @@ public class QuestionAnswer implements Serializable {
 		return answer;
 	}
 
-	public void setAnswer(final String Answer) {
-		this.answer = Answer;
+	public void setAnswer(final String answer) {
+		this.answer = answer;
 	}
 
 	public boolean isCorrectAnswer() {
