@@ -11,5 +11,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 	@Query(value = "SELECT q.* FROM question q WHERE q.site_id = ?1", nativeQuery = true)
 	List<Question> findSiteQuestions(Long siteId);
 
+	@Query(value = "SELECT q.* FROM question q WHERE q.site_id = ?1 AND q.question_id = ?2 LIMIT 1", nativeQuery = true)
+	List<Question> findByIdAndSiteIdNotIn(Long siteId, List<Long> ids);
+
 
 }
