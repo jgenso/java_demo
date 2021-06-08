@@ -1,6 +1,8 @@
 package com.challenge.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -34,10 +36,12 @@ public class Question implements Serializable {
 	@Length(min = 0, max = 250)
 	private String question;
 
+	@Fetch(FetchMode.SELECT)
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	private List<QuestionAnswer> answers = new ArrayList<>();
 
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	private List<QuestionColumn> columns = new ArrayList<>();
 
 	@Column(nullable = false, updatable = false)

@@ -1,6 +1,7 @@
 package com.challenge.demo.controller;
 
 import com.challenge.demo.dto.QuestionAnswerDTO;
+import com.challenge.demo.dto.QuestionColumnDTO;
 import com.challenge.demo.dto.QuestionDTO;
 import com.challenge.demo.model.Question;
 import com.challenge.demo.service.QuestionService;
@@ -101,6 +102,26 @@ public class QuestionController {
 	public ResponseEntity<List<QuestionAnswerDTO>> getQuestionAnswers(@PathVariable(value = "id") Long questionId) {
 		return questionService.getQuestionsAnswers(questionId)
 				.map(question -> ResponseEntity.ok(question))
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+	@PostMapping("/{id}/columns")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<QuestionColumnDTO> createQuestionColumns(@PathVariable(value = "id") Long questionId,
+																   @RequestBody QuestionColumnDTO newQCDTO) {
+		return questionService
+				.createQuestionColumns(questionId, newQCDTO)
+				.map(questionColumn -> {
+					return new ResponseEntity<>(questionColumn, HttpStatus.CREATED);
+				})
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+	@GetMapping("/{id}/columns")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<List<QuestionColumnDTO>> getQuestionColumns(@PathVariable(value = "id") Long questionId) {
+		return questionService.getQuestionsColumns(questionId)
+				.map(questionColumn -> ResponseEntity.ok(questionColumn))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 }
